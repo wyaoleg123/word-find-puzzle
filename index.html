@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Word Find Challenge</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>🧠 Word Find Challenge</h1>
+    <p>You have 72 hours from your first visit to complete this challenge.</p>
+    <form id="puzzleForm">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" required><br><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" required><br><br>
+        <img src="puzzle.png" alt="Word Find Puzzle" style="max-width:100%;"><br><br>
+        <label for="words">Words you found (separated by commas):</label><br>
+        <textarea id="words" rows="6" cols="40" required></textarea><br><br>
+        <p><strong>Time spent:</strong> <span id="timeSpent">0</span> seconds</p>
+        <p><strong>Time left:</strong> <span id="timeLeft">Loading...</span></p>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="confirmation" style="display:none;">
+        <h2>✅ Thank you!</h2>
+        <p>Your entry has been recorded.</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
