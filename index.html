@@ -1,30 +1,43 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Word Find Challenge</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Word Find Puzzle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    iframe {
+      width: 100%;
+      max-width: 640px;
+      height: 900px;
+      border: none;
+    }
+    .note {
+      font-size: 1rem;
+      margin-top: 10px;
+      color: #333;
+    }
+  </style>
 </head>
 <body>
-    <h1>🧠 Word Find Challenge</h1>
-    <p>You have 72 hours from your first visit to complete this challenge.</p>
-    <form id="puzzleForm">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" required><br><br>
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" required><br><br>
-        <img src="puzzle.png" alt="Word Find Puzzle" style="max-width:100%;"><br><br>
-        <label for="words">Words you found (separated by commas):</label><br>
-        <textarea id="words" rows="6" cols="40" required></textarea><br><br>
-        <p><strong>Time spent:</strong> <span id="timeSpent">0</span> seconds</p>
-        <p><strong>Time left:</strong> <span id="timeLeft">Loading...</span></p>
-        <button type="submit">Submit</button>
-    </form>
-    <div id="confirmation" style="display:none;">
-        <h2>✅ Thank you!</h2>
-        <p>Your entry has been recorded.</p>
-    </div>
-    <script src="script.js"></script>
+  <h1>🧩 Word Find Puzzle</h1>
+  <p class="note">You have 72 hours from the time you first opened this page to submit your answers.</p>
+
+  <!-- Puzzle Image -->
+  <img src="puzzle.png" alt="Word Find Puzzle Image">
+
+  <h2>Submit Your Answers Below</h2>
+
+  <!-- Google Form Embed -->
+  <iframe src="https://forms.gle/ijD51KCGchwTHTDr7" allowfullscreen></iframe>
 </body>
 </html>
