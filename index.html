@@ -1,13 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Word Find Puzzle</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
       padding: 20px;
       background-color: #f4f4f4;
     }
@@ -15,29 +15,72 @@
       max-width: 100%;
       height: auto;
     }
-    iframe {
-      width: 100%;
-      max-width: 640px;
-      height: 900px;
-      border: none;
+    form {
+      margin-top: 20px;
     }
-    .note {
-      font-size: 1rem;
-      margin-top: 10px;
-      color: #333;
+    label, textarea, input {
+      display: block;
+      margin: 10px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>🧩 Word Find Puzzle</h1>
-  <p class="note">You have 72 hours from the time you first opened this page to submit your answers.</p>
+  <h1>Word Find Puzzle</h1>
+  <p>Note: You have 72 hours from your first visit on this device to complete the puzzle.</p>
+  <img src="word-find.png" alt="Word Find Puzzle Image" />
 
-  <!-- Puzzle Image -->
-  <img src="puzzle.png" alt="Word Find Puzzle Image">
+  <form id="puzzleForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="entry.2005620554" required />
 
-  <h2>Submit Your Answers Below</h2>
+    <label for="answers">Enter all your answers (as a paragraph):</label>
+    <textarea id="answers" name="entry.1166974658" rows="6" required></textarea>
 
-  <!-- Google Form Embed -->
-  <iframe src="https://forms.gle/ijD51KCGchwTHTDr7" allowfullscreen></iframe>
+    <input type="hidden" id="timeSpent" name="entry.1333984882" />
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('puzzleForm');
+    const startKey = 'puzzleStartTime';
+    const maxHours = 72;
+
+    // Timer start time: store on first visit
+    let startTime = localStorage.getItem(startKey);
+    if (!startTime) {
+      startTime = Date.now();
+      localStorage.setItem(startKey, startTime);
+    }
+
+    // Track how long user took in seconds
+    const sessionStart = Date.now();
+
+    form.addEventListener('submit', function (e) {
+      const now = Date.now();
+      const duration = Math.floor((now - sessionStart) / 1000); // in seconds
+      const totalElapsed = (now - parseInt(startTime)) / (1000 * 60 * 60); // in hours
+
+      if (totalElapsed > maxHours) {
+        alert("Sorry, your 72-hour submission window has expired.");
+        e.preventDefault();
+        return;
+      }
+
+      document.getElementById('timeSpent').value = duration;
+
+      // Replace with your real Google Form action URL
+      form.action =
+        "https://docs.google.com/forms/d/e/1FAIpQLSfySnRj4JBP2hEGddQuNnllDwK8Md7oELUwKnUboEdYh-qj4Q/formResponse";
+    });
+  </script>
 </body>
 </html>
