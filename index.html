@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,12 +13,9 @@
     img {
       max-width: 100%;
       height: auto;
-    }
-    form {
-      margin-top: 20px;
-    }
-    label, textarea, input {
       display: block;
+      margin: 20px auto;
+         display: block;
       margin: 10px 0;
     }
     button {
@@ -30,11 +26,17 @@
       border: none;
       cursor: pointer;
     }
+    #countdown {
+      font-weight: bold;
+      font-size: 18px;
+      color: #d9534f;
+    }
   </style>
 </head>
 <body>
   <h1>Word Find Puzzle</h1>
   <p>Note: You have 72 hours from your first visit on this device to complete the puzzle.</p>
+  <p>Time="countdown">72:00:00</span></p>
   <img src="word-find.png" alt="Word Find Puzzle Image" />
 
   <form id="puzzleForm">
@@ -51,31 +53,56 @@
 
   <script>
     const form = document.getElementById('puzzleForm');
+    const countdownDisplay = document.getElementById('countdown');
+    const timeSpentInput = document.getElementById('timeSpent');
     const startKey = 'puzzleStartTime';
-    const maxHours = 72;
+    const maxDuration = 72 * 60 * 60 * 1000; // 72 hours in milliseconds
 
-    // Timer start time: store on first visit
+    // Get or set the start time
     let startTime = localStorage.getItem(startKey);
     if (!startTime) {
       startTime = Date.now();
       localStorage.setItem(startKey, startTime);
+    } else {
+      startTime = parseInt(startTime);
     }
 
-    // Track how long user took in seconds
+    const deadline = startTime + maxDuration;
     const sessionStart = Date.now();
 
+    // Countdown timer
+    const countdownInterval = setInterval(() => {
+      const now = Date.now();
+      const remaining = deadline - now;
+
+      if (remaining <= 0) {
+        clearInterval(countdownInterval);
+        countdownDisplay.textContent = "00:00:00";
+        alert("Your 72-hour submission window has expired.");
+        form.querySelector("button").disabled = true;
+        return;
+      }
+
+      const hours = String(Math.floor(remaining / (1000 * 60 * 60))).padStart(2, '0');
+      const minutes = String(Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+      const seconds = String(Math.floor((remaining % (1000 * 60)) / 1000)).padStart(2, '0');
+
+      countdownDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+    }, 1000);
+
+    // On form submit
     form.addEventListener('submit', function (e) {
       const now = Date.now();
-      const duration = Math.floor((now - sessionStart) / 1000); // in seconds
-      const totalElapsed = (now - parseInt(startTime)) / (1000 * 60 * 60); // in hours
+      const totalElapsed = now - startTime;
 
-      if (totalElapsed > maxHours) {
+      if (totalElapsed > maxDuration) {
         alert("Sorry, your 72-hour submission window has expired.");
         e.preventDefault();
         return;
       }
 
-      document.getElementById('timeSpent').value = duration;
+      const sessionDuration = Math.floor((now - sessionStart) / 1000); // in seconds
+      timeSpentInput.value = sessionDuration;
 
       // Replace with your real Google Form action URL
       form.action =
