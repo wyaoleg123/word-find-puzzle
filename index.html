@@ -62,7 +62,7 @@
     const countdownDisplay = document.getElementById('countdown');
     const timeSpentInput = document.getElementById('timeSpent');
     const startKey = 'puzzleStartTime';
-    const maxDuration = 72 * 60 * 60 * 1000; // 72 hours in milliseconds
+    const maxDuration = 72 * 60 * 60 * 1000;
 
     let startTime = localStorage.getItem(startKey);
     if (!startTime) {
@@ -95,19 +95,32 @@
     }, 1000);
 
     form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
       const now = Date.now();
       const totalElapsed = now - startTime;
 
       if (totalElapsed > maxDuration) {
         alert("Sorry, your 72-hour submission window has expired.");
-        e.preventDefault();
         return;
       }
 
       const sessionDuration = Math.floor((now - sessionStart) / 1000);
       timeSpentInput.value = sessionDuration;
 
-      form.action = "https://docs.google.com/forms/d/e/1FAIpQLSfUeh19XoojvpVX7_qaWKZTTA7JqOCB2Ggwark1jmGnR9AWGQ/formResponse";
+      const formData = new FormData(form);
+
+      fetch("https://docs.google.com/forms/d/e/1FAIpQLSfUeh19XoojvpVX7_qaWKZTTA7JqOCB2Ggwark1jmGnR9AWGQ/formResponse", {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+      }).then(() => {
+        alert("Thanks for submitting your answers!");
+        window.location.href = "thank-you.html";
+      }).catch((error) => {
+        console.error("Submission failed", error);
+        alert("There was an error submitting your form.");
+      });
     });
   </script>
 </body>
