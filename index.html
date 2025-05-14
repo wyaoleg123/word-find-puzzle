@@ -28,6 +28,7 @@
       font-size: 16px;
       background-color: #4CAF50;
       color: white;
+      border: none;
       cursor: pointer;
     }
     #countdown {
@@ -38,20 +39,19 @@
   </style>
 </head>
 <body>
-  <h1>Word Find Puzzle</h1>
-  <p>Note: You have 72 hours from your first visit on this device to complete the puzzle.</p>
+  hours from your first visit on this device to complete the puzzle.</p>
   <p>Time remaining: <span id="countdown">72:00:00</span></p>
   <img src="word-find.png" alt="Word Find Puzzle Image" />
 
   <form id="puzzleForm">
     <label for="name">Your Name (required):</label>
-    <input type="text" id="name" name="entry.2005620554" required />
+    <input type="text" id="name" name="name" required />
 
     <label for="answers">Words You Found (required):</label>
-    <textarea id="answers" name="entry.1166974658" rows="6" required></textarea>
+    <textarea id="answers" name="answers" rows="6" required></textarea>
 
     <label for="timeSpent">Time Taken (response validation):</label>
-    <input type="text" id="timeSpent" name="entry.1333984882" readonly />
+    <input type="text" id="timeSpent" name="timeSpent" readonly />
 
     <button type="submit">Submit</button>
   </form>
@@ -109,9 +109,8 @@
 
       const formData = new FormData(form);
 
-      fetch("https://docs.google.com/forms/d/e/1FAIpQLSfUeh19XoojvpVX7_qaWKZTTA7JqOCB2Ggwark1jmGnR9AWGQ/formResponse", {
+      fetch("https://script.google.com/macros/s/AKfycbw37ATx3WgQxU7obxVBt-dwmttFzXYQwP3Geb7QiC2O5WaNaA3Fvg-IWqnGbuL-j04V/exec", {
         method: "POST",
-        mode: "no-cors",
         body: formData
       }).then(() => {
         alert("Thanks for submitting your answers!");
