@@ -45,13 +45,14 @@
   <img src="word-find.png" alt="Word Find Puzzle Image" />
 
   <form id="puzzleForm">
-    <label for="name">Name:</label>
+    <label for="name">Your Name:</label>
     <input type="text" id="name" name="entry.2005620554" required />
 
-    <label for="answers">Enter all your answers (as a paragraph):</label>
+    <label for="answers">Words You Found:</label>
     <textarea id="answers" name="entry.1166974658" rows="6" required></textarea>
 
-    <input type="hidden" id="timeSpent" name="entry.1333984882" />
+    <label for="timeSpent">Time Taken (in seconds):</label>
+    <input type="text" id="timeSpent" name="entry.1333984882" readonly />
 
     <button type="submit">Submit</button>
   </form>
