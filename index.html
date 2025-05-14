@@ -15,7 +15,12 @@
       height: auto;
       display: block;
       margin: 20px auto;
-         display: block;
+    }
+    form {
+      margin-top: 20px;
+    }
+    label, textarea, input {
+      display: block;
       margin: 10px 0;
     }
     button {
@@ -36,7 +41,7 @@
 <body>
   <h1>Word Find Puzzle</h1>
   <p>Note: You have 72 hours from your first visit on this device to complete the puzzle.</p>
-  <p>Time="countdown">72:00:00</span></p>
+  <p>Time remaining: <span id="countdown">72:00:00</span></p>
   <img src="word-find.png" alt="Word Find Puzzle Image" />
 
   <form id="puzzleForm">
@@ -58,7 +63,6 @@
     const startKey = 'puzzleStartTime';
     const maxDuration = 72 * 60 * 60 * 1000; // 72 hours in milliseconds
 
-    // Get or set the start time
     let startTime = localStorage.getItem(startKey);
     if (!startTime) {
       startTime = Date.now();
@@ -70,7 +74,6 @@
     const deadline = startTime + maxDuration;
     const sessionStart = Date.now();
 
-    // Countdown timer
     const countdownInterval = setInterval(() => {
       const now = Date.now();
       const remaining = deadline - now;
@@ -90,7 +93,6 @@
       countdownDisplay.textContent = `${hours}:${minutes}:${seconds}`;
     }, 1000);
 
-    // On form submit
     form.addEventListener('submit', function (e) {
       const now = Date.now();
       const totalElapsed = now - startTime;
@@ -101,12 +103,10 @@
         return;
       }
 
-      const sessionDuration = Math.floor((now - sessionStart) / 1000); // in seconds
+      const sessionDuration = Math.floor((now - sessionStart) / 1000);
       timeSpentInput.value = sessionDuration;
 
-      // Replace with your real Google Form action URL
-      form.action =
-        "https://forms.gle/tizDiryJsfPbU7xn8";
+      form.action = "https://docs.google.com/forms/d/e/1FAIpQLSfUeh19XoojvpVX7_qaWKZTTA7JqOCB2Ggwark1jmGnR9AWGQ/formResponse";
     });
   </script>
 </body>
